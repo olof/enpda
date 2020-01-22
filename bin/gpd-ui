@@ -1,0 +1,2 @@
+#!/bin/sh
+PYTHONPATH=/usr/share/ui python3 -m gpd_ui

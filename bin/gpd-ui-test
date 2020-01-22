@@ -1,0 +1,4 @@
+#!/bin/sh
+export UI_DB=$PWD/data/data.db
+export UI_FOSDEM=$PWD/data/fosdem.xml
+exec ${0%-test}
