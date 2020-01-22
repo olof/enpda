@@ -5,7 +5,11 @@ class SyslogView(View):
     def __init__(self, app, logpath='/var/log/syslog', **kwargs):
         self.logpath = logpath
         lines = self.read_syslog()
-        self._syslog = urwid.ListBox([urwid.Text(line.strip()) for line in lines])
+        self._syslog = urwid.ListBox(
+            urwid.SimpleFocusListWalker(
+                [urwid.Text(line.strip()) for line in lines]
+            )
+        )
         super().__init__(app=app, body=self._syslog)
         self._syslog.set_focus(len(self._syslog.body)-1)
 
