@@ -20,6 +20,6 @@ install:
 	install -d $(DESTDIR)$(VARDIR)
 	find $(NAME) -type d \( \( -name __pycache__ -prune \) -o -exec install -d $(DESTDIR)$(APPDIR)/{} \; \)
 	find $(NAME) \( -name __pycache__ -prune \) -o -type f -exec install {} $(DESTDIR)$(APPDIR)/{} \;
-	install -m 0755 bin/gpd-ui $(DESTDIR)$(BINDIR)/gpd-ui
+	install -m 0755 bin/enpda $(DESTDIR)$(BINDIR)/enpda
 
 .PHONY: all clean install
