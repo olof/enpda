@@ -1,2 +1,2 @@
 #!/bin/sh
-PYTHONPATH=/usr/share/ui python3 -m gpd_ui
+PYTHONPATH=/usr/share/enpda python3 -m enpda
