@@ -1,4 +1,4 @@
-NAME ?= enpda
+NAME = enpda
 DATADIR ?= $(PREFIX)/share
 VARDIR ?= /var/lib/$(NAME)
 BINDIR ?= $(PREFIX)/bin
@@ -18,8 +18,8 @@ install:
 	install -d $(DESTDIR)$(BINDIR)
 	install -d $(DESTDIR)$(APPDIR)
 	install -d $(DESTDIR)$(VARDIR)
-	find gpd_ui -type d \( \( -name __pycache__ -prune \) -o -exec install -d $(DESTDIR)$(APPDIR)/{} \; \)
-	find gpd_ui \( -name __pycache__ -prune \) -o -type f -exec install {} $(DESTDIR)$(APPDIR)/{} \;
+	find $(NAME) -type d \( \( -name __pycache__ -prune \) -o -exec install -d $(DESTDIR)$(APPDIR)/{} \; \)
+	find $(NAME) \( -name __pycache__ -prune \) -o -type f -exec install {} $(DESTDIR)$(APPDIR)/{} \;
 	install -m 0755 bin/gpd-ui $(DESTDIR)$(BINDIR)/gpd-ui
 
 .PHONY: all clean install
