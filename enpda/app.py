@@ -1,6 +1,6 @@
 import urwid
-from gpd_ui.data import Data
-from gpd_ui.widgets import Header, NavMenu
+from enpda.data import Data
+from enpda.widgets import Header, NavMenu
 
 class App(urwid.Frame):
     def __init__(self, name, views, dbpath='/var/lib/ui/data.db', title=None):

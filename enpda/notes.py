@@ -1,8 +1,8 @@
 import urwid
 import logging
 from collections import defaultdict
-from gpd_ui.view import View
-from gpd_ui.widgets import SelectableText
+from enpda.view import View
+from enpda.widgets import SelectableText
 
 class NoteDB:
     def __init__(self, db, hooks=None):

@@ -3,9 +3,9 @@ import os
 import sys
 import urwid
 from urwid.command_map import command_map, CURSOR_UP, CURSOR_DOWN
-from gpd_ui.app import App
-from gpd_ui.views import FosdemView, SyslogView, NotesView
-from gpd_ui.fosdem import Fosdem
+from enpda.app import App
+from enpda.views import FosdemView, SyslogView, NotesView
+from enpda.fosdem import Fosdem
 
 palette = [
     ('header', 'white', 'dark blue'),
@@ -33,7 +33,8 @@ views = [
 command_map['k'] = CURSOR_UP
 command_map['j'] = CURSOR_DOWN
 
-app = App('gpd', views, dbpath=os.environ.get('UI_DB', '/var/lib/ui/data.db'))
+app = App('enpda', views, dbpath=os.environ.get('UI_DB', '/var/lib/ui/data.db'))
+
 
 loop = urwid.MainLoop(
     app, palette,

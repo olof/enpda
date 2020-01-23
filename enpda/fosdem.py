@@ -3,8 +3,8 @@ import sys
 from io import StringIO
 from lxml import etree
 import urwid
-from gpd_ui.view import View
-from gpd_ui.widgets import SelectableText
+from enpda.view import View
+from enpda.widgets import SelectableText
 from bs4 import BeautifulSoup
 
 class FosdemAuthor:

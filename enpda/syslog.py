@@ -1,5 +1,5 @@
 import urwid
-from gpd_ui.view import View
+from enpda.view import View
 
 class SyslogView(View):
     def __init__(self, app, logpath='/var/log/syslog', **kwargs):
