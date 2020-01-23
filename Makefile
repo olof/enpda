@@ -9,6 +9,7 @@ FOSDEM_XML_FETCH_PROG = curl -o "$(FOSDEM_XML_NAME)" -L
 FOSDEM_XML_FETCH_URL = https://fosdem.org/2020/schedule/xml
 
 all:
+clean:
 
 fosdem.xml:
 	$(FOSDEM_XML_FETCH_PROG) "$(FOSDEM_XML_FETCH_URL)"
@@ -21,3 +22,5 @@ install:
 	find gpd_ui \( -name __pycache__ -prune \) -o -type f -exec install {} $(DESTDIR)$(APPDIR)/{} \;
 	install -m 0755 bin/gpd-ui $(DESTDIR)$(BINDIR)/gpd-ui
 	install fosdem.xml $(DESTDIR)$(VARDIR)/fosdem.xml
+
+.PHONY: all clean install
