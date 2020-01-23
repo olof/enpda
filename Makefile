@@ -13,7 +13,7 @@ all:
 fosdem.xml:
 	$(FOSDEM_XML_FETCH_PROG) "$(FOSDEM_XML_FETCH_URL)"
 
-install: fosdem.xml
+install:
 	install -d $(DESTDIR)$(BINDIR)
 	install -d $(DESTDIR)$(APPDIR)
 	install -d $(DESTDIR)$(VARDIR)
