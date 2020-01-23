@@ -1,4 +1,4 @@
-NAME ?= ui
+NAME ?= enpda
 DATADIR ?= $(PREFIX)/share
 VARDIR ?= /var/lib/$(NAME)
 BINDIR ?= $(PREFIX)/bin
