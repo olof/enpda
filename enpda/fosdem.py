@@ -201,6 +201,9 @@ class FosdemEventList(urwid.Frame):
         if key == 'f':
             self.view.add_favorite(target.ev)
             return
+        if key == 'd':
+            self.view.remove_favorite(target.ev)
+            return
         if key == 'N':
             self.view.open_note(target.ev)
             return
@@ -234,6 +237,14 @@ class FosdemViewWidget(urwid.WidgetPlaceholder):
         sortkey = '%s_%s_%s' % (event.date, event.start_time, event.fosdem_id)
         try:
             self.app.data.insert('fosdem2020_favorite', sortkey, event.fosdem_id)
+        except sqlite3.IntegrityError as exc:
+            if not 'UNIQUE constraint failed' in str(exc):
+                raise
+
+    def remove_favorite(self, event):
+        sortkey = '%s_%s_%s' % (event.date, event.start_time, event.fosdem_id)
+        try:
+            self.app.data.delete('fosdem2020_favorite', sortkey)
         except sqlite3.IntegrityError as exc:
             if not 'UNIQUE constraint failed' in str(exc):
                 raise
@@ -286,6 +297,9 @@ class FosdemPanes(urwid.Columns):
 
     def add_favorite(self, event):
         return self.view.add_favorite(event)
+
+    def remove_favorite(self, event):
+        return self.view.remove_favorite(event)
 
     def open_note(self, event):
         return self.view.open_note(event)
