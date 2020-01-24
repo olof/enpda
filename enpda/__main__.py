@@ -18,7 +18,7 @@ palette = [
 
 def fosdem(app, fosdem_xml=None):
     if fosdem_xml is None:
-        fosdem_xml = os.environ.get('UI_FOSDEM', '/var/lib/ui/fosdem.xml')
+        fosdem_xml = os.environ.get('UI_FOSDEM', '/var/lib/enpda/fosdem.xml')
     fosdem = Fosdem.from_file(fosdem_xml, app.data)
     return FosdemView(app, fosdem=fosdem)
 
@@ -31,7 +31,7 @@ views = [
 command_map['k'] = CURSOR_UP
 command_map['j'] = CURSOR_DOWN
 
-app = App('enpda', views, dbpath=os.environ.get('UI_DB', '/var/lib/ui/data.db'))
+app = App('enpda', views, dbpath=os.environ.get('UI_DB', '/var/lib/enpda/data.db'))
 
 
 loop = urwid.MainLoop(
