@@ -78,11 +78,12 @@ class Fosdem:
         tree = etree.parse(fh)
         days = tree.xpath('/schedule/day')
         for day in days:
+            dayidx = int(day.get('index'))
             date = day.get('date')
             events = day.xpath('./room/event')
 
             for ev in events:
-                track = attr(ev, 'track')
+                track = 'Day %d: %s' % (dayidx, attr(ev, 'track'))
                 room = attr(ev, 'room')
 
                 if not track in self.tracks:
