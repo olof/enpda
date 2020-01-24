@@ -178,11 +178,10 @@ class FosdemTrackList(urwid.Frame):
         self.fosdem = fosdem
         self.list = FosdemList(view, ['Favorites'] + fosdem.tracks)
         self.ctrl = FosdemTrackListControl(self)
-        #self.prompt = urwid.Edit('filter: ')
+
         super().__init__(
             body=self.list,
             header=self.ctrl,
-            #footer=urwid.AttrMap(self.prompt, 'search'),
             focus_part='body',
         )
 
@@ -320,9 +319,6 @@ class FosdemViewWidget(urwid.WidgetPlaceholder):
 
     def keypress(self, size, key):
         if self.popup_open:
-            if key == 'f':
-                # TODO add favorite
-                return
             if key in ['enter', 'q', 'Q']:
                 self.original_widget = self.original_widget[0]
                 self.popup_open = False
