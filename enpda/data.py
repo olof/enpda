@@ -56,3 +56,9 @@ class Data:
             SET value=?
             WHERE hashkey=? AND sortkey=?
         ''', [str(value), str(hashkey), str(sortkey)])
+
+    def delete(self, hashkey, sortkey):
+        return self.db.execute('''
+            DELETE FROM dynamo
+            WHERE hashkey=? AND sortkey=?
+        ''', [str(hashkey), str(sortkey)])
