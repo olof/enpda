@@ -129,33 +129,78 @@ class Fosdem:
 class FosdemList(urwid.ListBox):
     def __init__(self, view, items):
         self.view = view
-        self.walker = urwid.SimpleFocusListWalker([
-            SelectableText(x) for x in items
-        ])
-        super().__init__(self.walker)
+        self.list = items
+        self.w = urwid.SimpleFocusListWalker([])
+        self.filter()
+        super().__init__(self.w)
+
+    def filter(self, cb=None):
+        if cb is None:
+            cb = lambda _: True
+        self.w.clear()
+        for item in [i for i in self.list if cb(i) or i == 'Favorites']:
+            self.w.append(SelectableText(item))
 
     def keypress(self, size, key):
-        if key == 'j':
-            key = 'down'
-        if key == 'k':
-            key = 'up'
+        if self.focus_position == 0 and key in ['k', 'up']:
+            self.view.tracklist.toggle_focus()
+            return
+        if key == 'enter':
+            track = self.focus.text
+            self.view.update_track(track, self.view.fosdem.trackinfo.get(track, {}))
+            return
+        return super().keypress(size, key)
+
+class FosdemTrackListControl(urwid.Columns):
+    def __init__(self, tracklist):
+        self.tracklist = tracklist
+
+        super().__init__([
+            SelectableText(('active', 'All days')),
+            SelectableText('Day 1'),
+            SelectableText('Day 2'),
+        ])
+
+    def keypress(self, size, key):
+        if key == 'enter':
+            if self.focus.text.startswith('Day '):
+                self.tracklist.filter(lambda line: line.startswith(self.focus.text))
+            else:
+                self.tracklist.filter()
+            return
+        if key == 'j' or key == 'down':
+            self.tracklist.focus_position = 'body'
+            return
         return super().keypress(size, key)
 
 class FosdemTrackList(urwid.Frame):
     def __init__(self, view, fosdem):
         self.fosdem = fosdem
         self.list = FosdemList(view, ['Favorites'] + fosdem.tracks)
+        self.ctrl = FosdemTrackListControl(self)
         #self.prompt = urwid.Edit('filter: ')
         super().__init__(
             body=self.list,
+            header=self.ctrl,
             #footer=urwid.AttrMap(self.prompt, 'search'),
             focus_part='body',
         )
 
+    def toggle_focus(self):
+        if self.focus_position == 'body':
+            self.focus_position = 'header'
+        else:
+            self.focus_position = 'body'
+
+    def filter(self, cb=None):
+        self.list.filter(cb)
+
     def keypress(self, size, key):
-        if key == 'enter':
-            track = self.list.focus.text
-            self.list.view.update_track(track, self.fosdem.trackinfo.get(track, {}))
+        if key == 'tab':
+            self.toggle_focus()
+            return
+        key = self.focus.keypress(size, key)
+        if not key:
             return
         return super().keypress(size, key)
 
@@ -192,8 +237,8 @@ class FosdemEventList(urwid.Frame):
         else:
             self.header.set_text(('subheader', '%s (no events listed)' % track_title))
 
-        self.walker.clear()
-        self.walker.extend([FosdemEventText(ev) for ev in events])
+        self.list.w.clear()
+        self.list.w.extend([FosdemEventText(ev) for ev in events])
 
     def keypress(self, size, key):
         target = self.list.focus
