@@ -20,11 +20,7 @@ def fosdem(app, fosdem_xml=None):
     fosdem = Fosdem.from_file(fosdem_xml, app.data)
     return FosdemView(app, fosdem=fosdem)
 
-def dummy(*args, **kwargs):
-    return urwid.Filler(urwid.Text('dummy'))
-
 views = [
-    ('matrix', dummy),
     ('notes', NotesView),
     ('fosdem', fosdem),
     ('system', SyslogView),
