@@ -3,6 +3,7 @@ import sys
 from io import StringIO
 from lxml import etree
 import urwid
+import sqlite3
 from enpda.view import View
 from enpda.widgets import SelectableText
 from bs4 import BeautifulSoup
@@ -231,7 +232,11 @@ class FosdemViewWidget(urwid.WidgetPlaceholder):
 
     def add_favorite(self, event):
         sortkey = '%s_%s_%s' % (event.date, event.start_time, event.fosdem_id)
-        self.app.data.insert('fosdem2020_favorite', sortkey, event.fosdem_id)
+        try:
+            self.app.data.insert('fosdem2020_favorite', sortkey, event.fosdem_id)
+        except sqlite3.IntegrityError as exc:
+            if not 'UNIQUE constraint failed' in str(exc):
+                raise
 
     def open_note(self, event):
         self.app.change_view('notes', {
