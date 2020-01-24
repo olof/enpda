@@ -217,6 +217,7 @@ class FosdemEventList(urwid.Frame):
     def __init__(self, view, *args, track=None, **kwargs):
         self.view = view
         self.list = FosdemList(view, *args, **kwargs)
+        self.footer = urwid.Text('', 'right')
         self.header = urwid.Text(
             ('subheader', ('Track: %s' % track if track else 'no track selected')),
             'center'
@@ -224,6 +225,7 @@ class FosdemEventList(urwid.Frame):
         super().__init__(
             header=self.header,
             body=self.list,
+            footer=self.footer,
             focus_part='body',
         )
 
@@ -242,13 +244,16 @@ class FosdemEventList(urwid.Frame):
 
     def keypress(self, size, key):
         target = self.list.focus
+        self.footer.set_text('')
         if target.keypress(size, key) is None:
             return
         if key == 'f':
             self.view.add_favorite(target.ev)
+            self.footer.set_text(('success', 'added favorite'))
             return
         if key == 'd':
             self.view.remove_favorite(target.ev)
+            self.footer.set_text(('success', 'deleted favorite'))
             return
         if key == 'N':
             self.view.open_note(target.ev)

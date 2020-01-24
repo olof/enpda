@@ -12,6 +12,7 @@ palette = [
     ('subheader', 'yellow', 'black'),
     ('nav', 'white', 'dark blue'),
     ('search', 'white', 'dark blue'),
+    ('success', 'black,bold', 'dark green'),
     ('active', 'default,bold,underline', 'default'),
 ]
 
