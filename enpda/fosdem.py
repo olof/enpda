@@ -64,6 +64,7 @@ class Fosdem:
         self._by_id = {}
         self.tracks = []
         self.trackinfo = {}
+        self.days = []
         self.db = db
 
         def authors(ev):
@@ -81,6 +82,7 @@ class Fosdem:
             dayidx = int(day.get('index'))
             date = day.get('date')
             events = day.xpath('./room/event')
+            self.days.append('Day %d' % dayidx)
 
             for ev in events:
                 track = 'Day %d: %s' % (dayidx, attr(ev, 'track'))
