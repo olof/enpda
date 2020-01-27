@@ -154,14 +154,13 @@ class FosdemList(urwid.ListBox):
         return super().keypress(size, key)
 
 class FosdemTrackListControl(urwid.Columns):
-    def __init__(self, tracklist):
+    def __init__(self, tracklist, fosdem):
         self.tracklist = tracklist
+        self.fosdem = fosdem
 
-        super().__init__([
-            SelectableText(('active', 'All days')),
-            SelectableText('Day 1'),
-            SelectableText('Day 2'),
-        ])
+        super().__init__(
+            [SelectableText(('active', 'All days'))] + [SelectableText(day) for day in fosdem.days]
+        )
 
     def keypress(self, size, key):
         if key == 'enter':
@@ -179,7 +178,7 @@ class FosdemTrackList(urwid.Frame):
     def __init__(self, view, fosdem):
         self.fosdem = fosdem
         self.list = FosdemList(view, ['Favorites'] + fosdem.tracks)
-        self.ctrl = FosdemTrackListControl(self)
+        self.ctrl = FosdemTrackListControl(self, fosdem)
 
         super().__init__(
             body=self.list,
