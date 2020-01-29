@@ -10,7 +10,7 @@ that's what you were going to do anyways.
 
 **This is very early prototype software**
 
-A PDA, a "Personal Digital Assitsant". My goal is to have a
+A PDA, a "Personal Digital Assistant". My goal is to have a
 dedicated device booting straight into this, a device that does
 not have an ideal size keyboard nor keyboard layout. (Yes, I have
 a specific device in mind, glad you asked.)
